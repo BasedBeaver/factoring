@@ -63,6 +63,7 @@ N = 16637
 F = 10
 L = F + 2
 
+string_to_input = str(L) + " " + str(F) + "\n"
 
 prime_fac_base = get_primes(F)
 largest_factor_prime = prime_fac_base[-1]
@@ -84,7 +85,7 @@ largest_factor_prime = prime_fac_base[-1]
 # r_list_test = [rone, rtwo, rthree, rfour, rfive, rsix, rseven, reight, rnine, rten, releven, rtwelve, ad]
 
 saved_r_vals = []
-binary_m = []
+binary_m = set()
 sum = 2
 index = 0
 while len(binary_m) < L:
@@ -102,24 +103,42 @@ while len(binary_m) < L:
 
                 # find out count of exponents
                 count = dict(Counter(r_primes))
-                print(count)
-                print("---------------------------------")
+                # print(count)
 
                 # Do binary row:
                 binary_row = [0] * len(prime_fac_base)
-
                 for k, v in count.items():
                     if v%2 == 0:
-                        count[k] = 0
+                        binary_row[prime_fac_base.index(k)] = 0
                     else:
-                        count[k] = 1
+                        binary_row[prime_fac_base.index(k)] = 1
+                binary_row = tuple(binary_row)
+                len_1 = len(binary_m)
+                binary_m.add(binary_row)
+                len_2 = len(binary_m)
+                if len_2 > len_1:
+                    # The binary row was added so save (r, r_primes)
 
+                    binary_string = ''
+                    for x in binary_row:
+                        if len(binary_string) == 0:
+                            binary_string = binary_string + str(x)
+                        else:
+                            binary_string = binary_string + " " + str(x)
+
+                    string_to_input = string_to_input + binary_string + "\n"
+
+                    saved_r_vals.append([index, r_to_save, r_primes, binary_row])
+                    index = index + 1
                 print(count)
-                print("---------------------------------")
+                print(binary_row)
+                print(prime_fac_base)
 
-                # IF binary unique do below
-                saved_r_vals.append([index, r_to_save, r_primes, binary_row])
-                index = index + 1
+                print(binary_m)
+                print(len(binary_m))
+                print(saved_r_vals)
+                print(string_to_input)
+                print("---------------------------------")
 
 
 
