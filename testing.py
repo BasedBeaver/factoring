@@ -4,6 +4,7 @@ from math import sqrt
 from collections import Counter
 import numpy as np
 import os
+import re
 
 
 def prime(i, primes):
@@ -154,4 +155,12 @@ lines = [x.strip() for x in lines]
 lines = lines[1:]
 print("lines", len(lines), lines)
 for line in lines:
+    indexes = []
+    line = re.sub(r"\s", "", line)
     print(line)
+    for i in range(len(line)):
+        if line[i] == "1":
+            indexes.append(i)
+    print("indexes", indexes)
+    # Test solution now
+
