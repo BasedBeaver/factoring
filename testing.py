@@ -5,12 +5,14 @@ from collections import Counter
 import numpy as np
 import os
 
+
 def prime(i, primes):
     for prime in primes:
         if not (i == prime or i % prime):
             return False
     primes.append(i)
     return i
+
 
 def get_primes(n):
     primes = []
@@ -22,31 +24,31 @@ def get_primes(n):
                 return primes
         i += 1
 
+
 def prime_facs(n):
     step = 1
     i = 2
-    if(i > 2):
+    if i > 2:
         step = 2
     factors = []
     while i * i <= n:
-        if (i > largest_factor_prime):
+        if i > largest_factor_prime:
             return False
         if n % i:
             i += step
         else:
             n //= i
             factors.append(i)
-    if (n > 1 and (n in prime_fac_base)):
+    if n > 1 and (n in prime_fac_base):
         factors.append(n)
     else:
         return False
     return factors
 
-def guess_r(k, j):
-    r = math.floor(sqrt(k*N)) + j
-    return r
 
-
+def guess_r(a, b):
+    nbr = math.floor(sqrt(a*N)) + b
+    return nbr
 
 
 test_N_1 = 323
@@ -118,16 +120,13 @@ while len(binary_m) < L:
                 len_2 = len(binary_m)
                 if len_2 > len_1:
                     # The binary row was added so save (r, r_primes)
-
                     binary_string = ''
                     for x in binary_row:
                         if len(binary_string) == 0:
                             binary_string = binary_string + str(x)
                         else:
                             binary_string = binary_string + " " + str(x)
-
                     string_to_input = string_to_input + binary_string + "\n"
-
                     saved_r_vals.append([index, r_to_save, r_primes, binary_row])
                     index = index + 1
                 print(count)
@@ -139,8 +138,20 @@ while len(binary_m) < L:
                 print(saved_r_vals)
                 print(string_to_input)
                 print("---------------------------------")
-
-
-
         sum = sum + 1
 
+input_file = open("input.txt", "w")
+input_file.write(string_to_input)
+input_file.close()
+
+path = os.getcwd()
+path = path + "/a.out input.txt output.txt"
+os.system(path)
+
+with open("output.txt") as f:
+    lines = f.readlines()
+lines = [x.strip() for x in lines]
+lines = lines[1:]
+print("lines", len(lines), lines)
+for line in lines:
+    print(line)
