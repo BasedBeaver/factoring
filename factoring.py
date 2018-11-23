@@ -7,7 +7,6 @@ import os
 import re
 
 
-
 def prime(i, primes):
     for prime in primes:
         if not (i == prime or i % prime):
@@ -27,25 +26,55 @@ def get_primes(n):
         i += 1
 
 
-def prime_facs(n):
+def prime_facs3(n):
+    factors = []
+    for prime in prime_fac_base:
+        if n == 1:
+            return factors
+        else:
+            while not(n % prime):
+                n = n // prime
+                factors.append(prime)
+    if n > 1:
+        return False
+    return factors
+
+
+def prime_facs2(n):
     step = 1
     i = 2
-    if i > 2:
+    if(i > 2):
         step = 2
     factors = []
-    while i * i < n:
-        if i > largest_factor_prime:
+    while i * i <= n:
+        if (i > largest_factor_prime):
             return False
         if n % i:
             i += step
         else:
             n //= i
             factors.append(i)
-    if n > 1 and (n in prime_fac_base):
+    if n > 1 and n in prime_fac_base:
         factors.append(n)
     else:
         return False
     return factors
+
+
+def prime_facs(r):
+    factors = []
+    factor_base = prime_fac_base
+    for prim_nbr in factor_base:
+        while r % prim_nbr == 0:
+            r = r // prim_nbr
+            factors.append(prim_nbr)
+    if r > 1 and r in factor_base:
+        factors.append(r)
+    return factors
+
+
+def is_smooth(prim):
+    return prim <= largest_factor_prime
 
 
 def guess_r(a, b):
@@ -63,7 +92,6 @@ real_N = 220744554721994695419563
 test_N_hc = 16637
 
 N = real_N
-
 F = 1000
 L = F + 10
 
@@ -101,9 +129,8 @@ while len(binary_m) < L:
         r_to_save = r
         r = r**2 % N
         if r > 1:
-            r_primes = prime_facs(r)
+            r_primes = prime_facs3(r)
             if r_primes:
-                #print(r, r_primes)
                 # find out count of exponents
                 count = dict(Counter(r_primes))
                 # Do binary row:
