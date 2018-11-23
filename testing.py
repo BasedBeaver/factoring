@@ -158,24 +158,23 @@ for line in lines:
     for i in range(len(line)):
         if line[i] == "1":
             indexes.append(i)
-    print("indexes", indexes)
+    # print("indexes", indexes)
     # Test each solution now
     sum_r = 1
     sum_r_2 = 1
     list_r_2 = []
     for i in indexes:
-        print(saved_r_vals[i][1])
-        sum_r = float((sum_r * saved_r_vals[i][1]) % N)
+        # print(saved_r_vals[i][1])
+        sum_r = (sum_r * saved_r_vals[i][1]) % N
         list_r_2.extend(saved_r_vals[i][2])
     list_r_2.sort()
     count_r_2 = dict(Counter(list_r_2))
     print(count_r_2)
     for k, v in count_r_2.items():
-        sum_r_2 = (sum_r_2 * pow(k, int(v/2))) & N
-    sum_r = int(sum_r)
+        sum_r_2 = (sum_r_2 * k**int(v/2)) & N
     print(sum_r)
     print(sum_r_2)
-    fac_1 = gcd(sum_r_2 - sum_r, N)
+    fac_1 = gcd(abs(sum_r_2 - sum_r), N)
     if fac_1 != 1:
         print("do we go in here?")
         fac_2 = int(N/fac_1)
