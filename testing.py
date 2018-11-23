@@ -2,9 +2,9 @@ from math import gcd
 import math
 from math import sqrt
 from collections import Counter
-import numpy as np
 import os
 import re
+
 
 
 def prime(i, primes):
@@ -103,11 +103,8 @@ while len(binary_m) < L:
             r_primes = prime_facs(r)
             if r_primes:
                 print(r, r_primes)
-
                 # find out count of exponents
                 count = dict(Counter(r_primes))
-                # print(count)
-
                 # Do binary row:
                 binary_row = [0] * len(prime_fac_base)
                 for k, v in count.items():
@@ -148,7 +145,7 @@ input_file.close()
 path = os.getcwd()
 path = path + "/a.out input.txt output.txt"
 os.system(path)
-
+# Read in solutions
 with open("output.txt") as f:
     lines = f.readlines()
 lines = [x.strip() for x in lines]
@@ -162,5 +159,27 @@ for line in lines:
         if line[i] == "1":
             indexes.append(i)
     print("indexes", indexes)
-    # Test solution now
-
+    # Test each solution now
+    sum_r = 1
+    sum_r_2 = 1
+    list_r_2 = []
+    for i in indexes:
+        print(saved_r_vals[i][1])
+        sum_r = float((sum_r * saved_r_vals[i][1]) % N)
+        list_r_2.extend(saved_r_vals[i][2])
+    list_r_2.sort()
+    count_r_2 = dict(Counter(list_r_2))
+    print(count_r_2)
+    for k, v in count_r_2.items():
+        sum_r_2 = (sum_r_2 * pow(k, int(v/2))) & N
+    sum_r = int(sum_r)
+    print(sum_r)
+    print(sum_r_2)
+    fac_1 = gcd(sum_r_2 - sum_r, N)
+    if fac_1 != 1:
+        print("do we go in here?")
+        fac_2 = int(N/fac_1)
+        print("The Factors of " + str(N) + " are " + str(fac_1) + " and " + str(fac_2))
+        break
+    elif fac_1 == 1:
+        print("not lucky")
