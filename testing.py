@@ -33,7 +33,7 @@ def prime_facs(n):
     if i > 2:
         step = 2
     factors = []
-    while i * i <= n:
+    while i * i < n:
         if i > largest_factor_prime:
             return False
         if n % i:
