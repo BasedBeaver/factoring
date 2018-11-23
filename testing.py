@@ -2,6 +2,7 @@ from math import gcd
 import math
 from math import sqrt
 from collections import Counter
+from copy import deepcopy
 import os
 import re
 
@@ -61,10 +62,10 @@ real_N = 220744554721994695419563
 
 test_N_hc = 16637
 
-N = 16637
+N = real_N
 
-F = 10
-L = F + 2
+F = 1000
+L = F + 10
 
 string_to_input = str(L) + " " + str(F) + "\n"
 
@@ -102,7 +103,7 @@ while len(binary_m) < L:
         if r > 1:
             r_primes = prime_facs(r)
             if r_primes:
-                print(r, r_primes)
+                #print(r, r_primes)
                 # find out count of exponents
                 count = dict(Counter(r_primes))
                 # Do binary row:
@@ -127,14 +128,15 @@ while len(binary_m) < L:
                     string_to_input = string_to_input + binary_string + "\n"
                     saved_r_vals.append([index, r_to_save, r_primes, binary_row])
                     index = index + 1
-                print(count)
-                print(binary_row)
-                print(prime_fac_base)
-
-                print(binary_m)
-                print(len(binary_m))
-                print(saved_r_vals)
-                print(string_to_input)
+                # print(count)
+                # print(binary_row)
+                # print(prime_fac_base)
+                #
+                # print(binary_m)
+                # print(len(binary_m))
+                # print(saved_r_vals)
+                # print(string_to_input)
+                print(index)
                 print("---------------------------------")
         sum = sum + 1
 
@@ -150,11 +152,11 @@ with open("output.txt") as f:
     lines = f.readlines()
 lines = [x.strip() for x in lines]
 lines = lines[1:]
-print("lines", len(lines), lines)
+# print("lines", len(lines), lines)
 for line in lines:
     indexes = []
     line = re.sub(r"\s", "", line)
-    print(line)
+    # print(line)
     for i in range(len(line)):
         if line[i] == "1":
             indexes.append(i)
@@ -169,14 +171,19 @@ for line in lines:
         list_r_2.extend(saved_r_vals[i][2])
     list_r_2.sort()
     count_r_2 = dict(Counter(list_r_2))
-    print(count_r_2)
-    for k, v in count_r_2.items():
-        sum_r_2 = (sum_r_2 * k**int(v/2)) & N
-    print(sum_r)
-    print(sum_r_2)
+    copy = deepcopy(count_r_2)
+    # print(count_r_2)
+    # tuple_r_2 = []
+    for k, v in copy.items():
+        # tuple_r_2.append([k, int(v/2)])
+        temp = [k, int(v/2)]
+        # print(temp)
+        sum_r_2 = (sum_r_2 * (temp[0]**temp[1])) % N
+
+    # print(sum_r)
+    # print(sum_r_2)
     fac_1 = gcd(abs(sum_r_2 - sum_r), N)
-    if fac_1 != 1:
-        print("do we go in here?")
+    if fac_1 != 1 and fac_1 != N:
         fac_2 = int(N/fac_1)
         print("The Factors of " + str(N) + " are " + str(fac_1) + " and " + str(fac_2))
         break
