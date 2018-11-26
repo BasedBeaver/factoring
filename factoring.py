@@ -54,14 +54,16 @@ real_N = 220744554721994695419563
 
 test_N_hc = 16637
 
-N = real_N
-F = 1000
+N = test_N_5
+
+F = 500
 L = F + 10
 
 string_to_input = str(L) + " " + str(F) + "\n"
 
 prime_fac_base = get_primes(F)
 largest_factor_prime = prime_fac_base[-1]
+
 saved_r_vals = []
 binary_m = set()
 sum = 2
